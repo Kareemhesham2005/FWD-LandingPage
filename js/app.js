@@ -1,10 +1,8 @@
 const mySections = document.querySelectorAll("section");
 const myUl = document.querySelector("#navbar__list");
 const myLi = document.querySelectorAll("li");
-document
-  .getElementById("section1")
-  .appendChild(document.createElement("button"));
-const myButton = document.querySelector("button");
+const myButton = document.createElement("button");
+document.getElementById("section1").before(myButton);
 
 for (section of mySections) {
   let myNewLi = document.createElement("li");
@@ -14,10 +12,9 @@ for (section of mySections) {
   myUl.appendChild(myNewLi);
 }
 let a = document.querySelectorAll("a");
-a[0].setAttribute("data-link", "section1");
-a[1].setAttribute("data-link", "section2");
-a[2].setAttribute("data-link", "section3");
-a[3].setAttribute("data-link", "section4");
+for (let i = 0; i < a.length; i++) {
+  a[i].setAttribute("data-link", `section${i + 1}`);
+}
 
 a.forEach((link) => {
   link.addEventListener("click", function () {
@@ -54,23 +51,20 @@ window.addEventListener("scroll", () => {
   });
 });
 
-myButton.textContent = "Back to Top";
+myButton.textContent = "Up";
 myButton.classList.add("btn");
 
 window.onscroll = () => {
   if (window.pageYOffset >= 500) {
-    myButton.classList.add("btn-show");
+    myButton.style.display = "block";
   } else {
-    myButton.classList.remove("btn-show");
+    myButton.style.display = "none";
   }
 };
 
-document.querySelector("main header").setAttribute("id", "header");
-
-myButton.addEventListener("click", () => {
-  document.getElementById("header").scrollIntoView({
+myButton.onclick = function () {
+  window.scrollTo({
+    top: 0,
     behavior: "smooth",
-    block: "end",
-    inline: "end",
   });
-});
+};
